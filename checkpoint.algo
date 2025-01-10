@@ -1,0 +1,39 @@
+ALGORITHM read_sentence
+VAR
+    char : CHARACTER;
+    previous_char : CHARACTER := ' ';
+    length, words, vowels : INTEGER := 0;
+BEGIN
+    Write("Enter the sentence character by character (end with a period '.'): ")
+    REPEAT
+        Read(char)
+        
+        -- Increment length for each character except the period
+        IF char <> '.' THEN
+            length := length + 1
+        ENDIF
+        
+        -- Check for vowels
+        IF char IN ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] THEN
+            vowels := vowels + 1
+        ENDIF
+        
+        -- Count words (a word ends when a space follows a non-space character)
+        IF char = ' ' AND previous_char <> ' ' THEN
+            words := words + 1
+        ENDIF
+        
+        -- Update previous_char
+        previous_char := char
+    UNTIL char = '.'
+
+    -- Add the last word if the sentence does not end with a space
+    IF previous_char <> ' ' THEN
+        words := words + 1
+    ENDIF
+
+    -- Output the results
+    Write("Length of the sentence: ", length)
+    Write("Number of words: ", words)
+    Write("Number of vowels: ", vowels)
+END
